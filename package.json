@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "npm install",
     "test": "node ace test"
   },
   "keywords": [
