@@ -2,10 +2,10 @@
 -- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 19, 2020 at 02:58 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Host: localhost
+-- Tempo de geração: 24/11/2020 às 05:48
+-- Versão do servidor: 10.4.14-MariaDB
+-- Versão do PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `relatorio_horas`
+-- Banco de dados: `relatorio_horas`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `adonis_schema`
+-- Estrutura para tabela `adonis_schema`
 --
 
 CREATE TABLE `adonis_schema` (
@@ -35,7 +35,7 @@ CREATE TABLE `adonis_schema` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `adonis_schema`
+-- Despejando dados para a tabela `adonis_schema`
 --
 
 INSERT INTO `adonis_schema` (`id`, `name`, `batch`, `migration_time`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `adonis_schema` (`id`, `name`, `batch`, `migration_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `horas`
+-- Estrutura para tabela `horas`
 --
 
 CREATE TABLE `horas` (
@@ -65,18 +65,18 @@ CREATE TABLE `horas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `horas`
+-- Despejando dados para a tabela `horas`
 --
 
 INSERT INTO `horas` (`id`, `data`, `inicio`, `saida`, `retorno`, `fim`, `total`, `obs`, `created_at`, `updated_at`, `user_id`) VALUES
 (8, '2020-11-17', '2020-11-17 08:56:00', '2020-11-17 12:56:00', '2020-11-17 13:58:00', '2020-11-17 20:00:00', '10:02:00', NULL, '2020-11-17 12:57:19', '2020-11-17 12:57:19', 1),
 (10, '2020-11-16', '2020-11-16 10:29:00', '2020-11-16 13:33:00', '2020-11-16 13:50:00', '2020-11-16 19:30:00', '08:44:00', NULL, '2020-11-17 14:27:47', '2020-11-17 17:59:28', 1),
-(11, '2020-11-18', '2020-11-18 10:00:00', '2020-11-18 13:21:00', '2020-11-18 14:21:00', '2020-11-18 19:29:00', '08:29:00', NULL, '2020-11-18 22:08:13', '2020-11-18 22:08:13', 0);
+(13, '2020-11-23', '2020-11-23 09:00:00', '2020-11-23 13:22:00', '2020-11-23 14:40:00', '2020-11-23 18:36:00', '08:18:00', NULL, '2020-11-23 21:32:56', '2020-11-23 21:47:22', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tokens`
+-- Estrutura para tabela `tokens`
 --
 
 CREATE TABLE `tokens` (
@@ -92,7 +92,7 @@ CREATE TABLE `tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estrutura para tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -109,34 +109,35 @@ CREATE TABLE `users` (
   `cargo` varchar(255) DEFAULT NULL,
   `resumo` longtext DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `valor_hora` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `users`
+-- Despejando dados para a tabela `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `nome`, `sobrenome`, `idade`, `cidade`, `telefone`, `image`, `cargo`, `resumo`, `created_at`, `updated_at`) VALUES
-(1, 'lhdeveloper', 'contato@lhdeveloper.me', '$2a$10$wxV0U7YtRv9.wSGkhmDkJ.plUR7yOm3nFjXoOKhzpM1RevNiIPUp.', 'Rick', 'Costa', '32', 'São Caetano do Sul', '11 97451-0092', 'http://res.cloudinary.com/dg7jnpdp7/image/upload/v1605741616/fhlbqk5qehcqlz1tojkl.jpg', 'Front-end Developer', 'What is Lorem Ipsum?\nFrom its medieval origins to the digital era, learn everything there is to know about the ubiquitous lorem ipsum passage.\n\nLorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:', '2020-11-16 01:29:53', '2020-11-18 20:20:17');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `nome`, `sobrenome`, `idade`, `cidade`, `telefone`, `image`, `cargo`, `resumo`, `created_at`, `updated_at`, `valor_hora`) VALUES
+(1, 'lhdeveloper', 'lhcosta.rato@outlook.com', '$2a$10$wxV0U7YtRv9.wSGkhmDkJ.plUR7yOm3nFjXoOKhzpM1RevNiIPUp.', 'Rick', 'Costa', '32', 'São Caetano do Sul', '11 97451-0092', 'http://res.cloudinary.com/dg7jnpdp7/image/upload/v1605741616/fhlbqk5qehcqlz1tojkl.jpg', 'Front-end Developer', '<p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p><strong>From its medieval origins to the digital era, learn everything there is to know about the ubiquitous </strong><i><strong>lorem ipsum</strong></i><strong> passage.</strong></p>', '2020-11-16 01:29:53', '2020-11-23 22:00:14', '55');
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `adonis_schema`
+-- Índices de tabela `adonis_schema`
 --
 ALTER TABLE `adonis_schema`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `horas`
+-- Índices de tabela `horas`
 --
 ALTER TABLE `horas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tokens`
+-- Índices de tabela `tokens`
 --
 ALTER TABLE `tokens`
   ADD PRIMARY KEY (`id`),
@@ -145,7 +146,7 @@ ALTER TABLE `tokens`
   ADD KEY `tokens_token_index` (`token`);
 
 --
--- Indexes for table `users`
+-- Índices de tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -153,39 +154,39 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `adonis_schema`
+-- AUTO_INCREMENT de tabela `adonis_schema`
 --
 ALTER TABLE `adonis_schema`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `horas`
+-- AUTO_INCREMENT de tabela `horas`
 --
 ALTER TABLE `horas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `tokens`
+-- AUTO_INCREMENT de tabela `tokens`
 --
 ALTER TABLE `tokens`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Restrições para tabelas despejadas
 --
 
 --
--- Constraints for table `tokens`
+-- Restrições para tabelas `tokens`
 --
 ALTER TABLE `tokens`
   ADD CONSTRAINT `tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
