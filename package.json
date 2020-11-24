@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "adonis serve --dev",
+    "postinstall": "npm install",
     "test": "node ace test"
   },
   "keywords": [
