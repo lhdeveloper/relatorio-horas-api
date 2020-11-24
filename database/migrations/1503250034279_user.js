@@ -17,6 +17,7 @@ class UserSchema extends Schema {
       table.string('telefone').notNullable()
       table.string('imagem', 255).notNullable()
       table.string('cargo')
+      table.string('valor_hora')
       table.text('resumo', 'longtext')
       table.timestamps()
     })

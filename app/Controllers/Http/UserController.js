@@ -60,7 +60,7 @@ class UserController {
     }
 
     async update({ params, request }){
-        const data = request.only(['nome', 'sobrenome', 'cidade', 'idade', 'cargo', 'telefone', 'resumo', 'image'])
+        const data = request.only(['nome', 'sobrenome', 'email', 'cidade', 'idade', 'cargo', 'telefone', 'resumo', 'image', 'valor_hora'])
 
         const user = await User.find(params.id);
         

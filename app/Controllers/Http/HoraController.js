@@ -43,7 +43,7 @@ class HoraController {
      */
     async store({ request }) {
         // pegando os campos
-        const results = request.only(['data', 'inicio', 'saida', 'retorno', 'fim',  'obs']);
+        const results = request.only(['data', 'inicio', 'saida', 'retorno', 'fim',  'obs', 'user_id']);
 
         // calculando hora de entrada e hora de saida
         const inicioDia = moment(results.inicio);
@@ -62,6 +62,8 @@ class HoraController {
 
         // setando totalHoras no campo total_horas_dia
         results.total = totalHoras;
+
+        console.log(results);
 
         // criando item no banco
         const hora = await Hora.create(results);
