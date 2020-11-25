@@ -1,7 +1,7 @@
 # Node modules
 node_modules
 .env
-BD/
+
 # Adonis directory for storing tmp files
 tmp
 
@@ -9,3 +9,6 @@ tmp
 
 # The development sqlite file
 database/*.sqlite
+
+# Banco de dadoss
+backup_mysql/
