@@ -1,6 +1,3 @@
-# Dotenv
-.env
-
 # Node modules
 node_modules
 
@@ -12,8 +9,11 @@ tmp
 # The development sqlite file
 database/*.sqlite
 
-# Banco de dadoss
+# Banco de dados
 backup_mysql/
 
 # Arquivo chave AWS (amazon)
 relatorio_horas_deploy.pem
+
+# Dotenv
+.env
