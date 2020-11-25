@@ -35,7 +35,7 @@ class UserController {
 
             return userReturn;
         } catch (error) {
-            response.send('Missing or invalid jwt token')
+            response.send('Seu token é inválido.')
         }
     }
 
@@ -59,7 +59,8 @@ class UserController {
         return users;
     }
 
-    async update({ params, request }){
+    async update({ params, request, auth }){
+
         const data = request.only(['nome', 'sobrenome', 'email', 'cidade', 'idade', 'cargo', 'telefone', 'resumo', 'image', 'valor_hora'])
 
         const user = await User.find(params.id);

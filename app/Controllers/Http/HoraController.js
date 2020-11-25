@@ -41,29 +41,33 @@ class HoraController {
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
-    async store({ request }) {
+    async store({ request, auth }) {
         // pegando os campos
         const results = request.only(['data', 'inicio', 'saida', 'retorno', 'fim',  'obs', 'user_id']);
-
-        // calculando hora de entrada e hora de saida
+        
+        // salvando o horario inicial
         const inicioDia = moment(results.inicio);
-        const finalDia = moment(results.fim)
-        const duration = moment.utc(moment(finalDia,"HH:mm:ss").diff(moment(inicioDia,"HH:mm:ss"))).format("HH:mm:ss");
-        
-        // calculando horário de almoço
-        const saidaAlmoco = moment(results.saida);
-        const voltaAlmoco = moment(results.retorno);
-        const durationAlmoco = moment.utc(moment(voltaAlmoco, 'HH:mm:ss').diff(moment(saidaAlmoco, 'HH:mm:ss'))).format('HH:mm:ss');
-        
-        // subtraindo o horário de almoço do horário total
-        const dataHora = moment(moment()).format(`YYYY-MM-DD ${duration}Z`);
-        const dataSubtract = moment(dataHora).subtract(durationAlmoco, 'hour');
-        const totalHoras = moment(dataSubtract).format('HH:mm:ss');
 
-        // setando totalHoras no campo total_horas_dia
-        results.total = totalHoras;
+        if(results.fim !== null){
+            // calculando hora de entrada e hora de saida
+            const finalDia = moment(results.fim)
+            const duration = moment.utc(moment(finalDia,"HH:mm:ss").diff(moment(inicioDia,"HH:mm:ss"))).format("HH:mm:ss");
+            
+            // calculando horário de almoço
+            const saidaAlmoco = moment(results.saida);
+            const voltaAlmoco = moment(results.retorno);
+            const durationAlmoco = moment.utc(moment(voltaAlmoco, 'HH:mm:ss').diff(moment(saidaAlmoco, 'HH:mm:ss'))).format('HH:mm:ss');
+            
+            // subtraindo o horário de almoço do horário total
+            const dataHora = moment(moment()).format(`YYYY-MM-DD ${duration}Z`);
+            const dataSubtract = moment(dataHora).subtract(durationAlmoco, 'hour');
+            const totalHoras = moment(dataSubtract).format('HH:mm:ss');
 
-        console.log(results);
+            // setando totalHoras no campo total_horas_dia
+            results.total = totalHoras;
+        }else {
+            results.total = '00:00:00'
+        }
 
         // criando item no banco
         const hora = await Hora.create(results);
@@ -97,39 +101,53 @@ class HoraController {
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
-    async update({ params, request, response }) {
-        //buscando campos a serem atualizados
-        const results = request.only(['data', 'inicio', 'fim', 'saida', 'retorno', 'obs', 'total']);
-        
-        // pegando o item pelo id
-        const hora = await Hora.find(params.id)
+    async update({ params, request, response, auth }) {
+        // verificando se usuário logado tem acesso
+        const userToken = await auth.getUser();
+        const paramUserID = params.user_id;
+        const userID = parseFloat(paramUserID);
 
-        // calculando hora de entrada e hora de saida
-        const inicioDia = moment(results.inicio);
-        const finalDia = moment(results.fim)
-        const duration = moment.utc(moment(finalDia,"HH:mm:ss").diff(moment(inicioDia,"HH:mm:ss"))).format("HH:mm:ss");
-        
-        // calculando horário de almoço
-        const saidaAlmoco = moment(results.saida);
-        const voltaAlmoco = moment(results.retorno);
-        const durationAlmoco = moment.utc(moment(voltaAlmoco, 'HH:mm:ss').diff(moment(saidaAlmoco, 'HH:mm:ss'))).format('HH:mm:ss');
-        
-        // subtraindo o horário de almoço do horário total
-        const dataHora = moment(moment()).format(`YYYY-MM-DD ${duration}Z`);
-        const dataSubtract = moment(dataHora).subtract(durationAlmoco, 'hour');
-        const totalHoras = moment(dataSubtract).format('HH:mm:ss');
+        if(userToken.id === userID){
+            //buscando campos a serem atualizados
+            const results = request.only(['data', 'inicio', 'fim', 'saida', 'retorno', 'obs', 'total']);
+            
+            // pegando o item pelo id
+            const hora = await Hora.find(params.id)
 
-        // setando totalHoras no campo total_horas_dia
-        results.total = totalHoras;
+            // verificando se o campo fim (final expedidente) foi preenchido para calcular o restante
+            if(results.fim != null){
+                // calculando hora de entrada e hora de saida
+                const inicioDia = moment(results.inicio);
+                const finalDia = moment(results.fim)
+                const duration = moment.utc(moment(finalDia,"HH:mm:ss").diff(moment(inicioDia,"HH:mm:ss"))).format("HH:mm:ss");
+                
+                // calculando horário de almoço
+                const saidaAlmoco = moment(results.saida);
+                const voltaAlmoco = moment(results.retorno);
+                const durationAlmoco = moment.utc(moment(voltaAlmoco, 'HH:mm:ss').diff(moment(saidaAlmoco, 'HH:mm:ss'))).format('HH:mm:ss');
+                
+                // subtraindo o horário de almoço do horário total
+                const dataHora = moment(moment()).format(`YYYY-MM-DD ${duration}Z`);
+                const dataSubtract = moment(dataHora).subtract(durationAlmoco, 'hour');
+                const totalHoras = moment(dataSubtract).format('HH:mm:ss');
 
-        // merge das informações atualizadas
-        hora.merge(results);
+                // setando totalHoras no campo total_horas_dia
+                results.total = totalHoras;
+            }else{
+                results.total = '00:00:00';
+            }
 
-        // salvando alterações
-        await hora.save();
+            // merge das informações atualizadas
+            hora.merge(results);
 
-        // retornando o item atualizado
-        return hora;
+            // salvando alterações
+            await hora.save();
+
+            // retornando o item atualizado
+            return hora;
+        }else {
+            return response.status(403).json('Forbidden');
+        }
     }
 
     /**
@@ -148,11 +166,22 @@ class HoraController {
         await hora.delete();
     }
 
-    async horasPerUser({ params }) {
-        // varmazenando na variavel todos os registros de horas
-        return await Database
+    async horasPerUser({ params, response, auth }) {
+        // verificando se usuário logado tem acesso
+        const userToken = await auth.getUser();
+        const paramUserID = params.user_id;
+        const userID = parseFloat(paramUserID);
+
+        if(userToken.id === userID){
+            // varmazenando na variavel todos os registros de horas
+            return await Database
             .table('horas')
             .where('user_id', params)
+        }else{
+            return response.status(403).json('Forbidden');
+        }
+
+        
     }
 }
 

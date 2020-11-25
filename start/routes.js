@@ -15,7 +15,7 @@ Route.group(() => {
     Route.get('/horas/:id', 'HoraController.show')
 
     //Editar registro
-    Route.put('/horas/:id', 'HoraController.update')
+    Route.put('/horas/:id/:user_id', 'HoraController.update')
 
     //Deletar registro
     Route.delete('/horas/:id', 'HoraController.destroy')
