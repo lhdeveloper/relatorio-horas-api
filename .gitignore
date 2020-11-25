@@ -12,3 +12,6 @@ database/*.sqlite
 
 # Banco de dadoss
 backup_mysql/
+
+# Arquivo chave AWS (amazon)
+relatorio_horas_deploy.pem
