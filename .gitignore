@@ -1,6 +1,7 @@
 # Node modules
 node_modules
 .env
+BD/
 # Adonis directory for storing tmp files
 tmp
 
