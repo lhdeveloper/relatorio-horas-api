@@ -89,7 +89,7 @@ class UserController {
         if(userAuthID === userID){
             return auth.user
         }else{
-            return response.status(403).json('Forbidden');
+            return response.status(403).json('Forbidden');3
         }
         
     }
