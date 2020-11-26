@@ -1,4 +1,0 @@
-[build]
-base = "."
-command = "adonis serve --dev"
-publish = "./"
