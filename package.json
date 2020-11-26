@@ -7,7 +7,6 @@
   "scripts": {
     "start": "ENV_SILENT=true node server.js",
     "test": "node ace test",
-    "prestart": "npm install"
   },
   "keywords": [
     "adonisjs",
