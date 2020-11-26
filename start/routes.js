@@ -33,7 +33,7 @@ Route.group(() => {
     Route.get('/users', 'UserController.index').middleware('auth');
 
     // Disp user
-    Route.get('/users/view/:username', 'UserController.show').middleware('auth')
+    Route.get('/users/view/:username/:id', 'UserController.show').middleware('auth')
 
     // Current User
     Route.get('/user/:id', 'UserController.show').middleware('auth')

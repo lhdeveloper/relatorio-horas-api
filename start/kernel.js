@@ -57,4 +57,4 @@ const serverMiddleware = [
 Server
   .registerGlobal(globalMiddleware)
   .registerNamed(namedMiddleware)
-  .use(['Adonis/Middleware/Cors', 'serverMiddleware'])
+  .use(serverMiddleware)

@@ -79,11 +79,19 @@ class UserController {
         await user.delete()
     }
 
-    show ({ auth, params }) {
-        if (!auth) {
-          return 'You cannot see someone else\'s profile'
+    show ({ auth, params, response }) {
+
+        // verificando se usuário logado tem acesso
+        const userAuthID = auth.user.id
+        const paramUserID = params.id;
+        const userID = parseFloat(paramUserID);
+
+        if(userAuthID === userID){
+            return auth.user
+        }else{
+            return response.status(403).json('Forbidden');
         }
-        return auth.user
+        
     }
 }
 
