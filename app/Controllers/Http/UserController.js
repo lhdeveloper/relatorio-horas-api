@@ -4,10 +4,15 @@ const User = use('App/Models/User');
 const Helpers = use('Helpers');
 
 class UserController {
-    async register({ request, response }){
+    async register({ request, response, auth }){
         const data = request.only(['username', 'email', 'password'])
         try{
             const user = await User.create(data);
+            const token = await auth.attempt(data.email, data.password);
+
+            user.token = token;
+
+            console.log(user)
             return user;
 
         } catch (error){
