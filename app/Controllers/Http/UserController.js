@@ -10,6 +10,7 @@ class UserController {
         try{
             const user = await User.create(data);
             return user;
+
         } catch (error){
             return response.status(500).send({error: error})
         }
@@ -89,7 +90,7 @@ class UserController {
         if(userAuthID === userID){
             return auth.user
         }else{
-            return response.status(403).json('Forbidden');3
+            return response.status(403).json('Forbidden');
         }
         
     }
