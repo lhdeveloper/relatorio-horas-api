@@ -175,7 +175,7 @@ class HoraController {
         if(userToken.id === userID){
             // varmazenando na variavel todos os registros de horas
             return await Database
-            .table('horas')
+            .from('horas')
             .where('user_id', userToken.id)
         }else{
             return response.status(403).json('Forbidden');
