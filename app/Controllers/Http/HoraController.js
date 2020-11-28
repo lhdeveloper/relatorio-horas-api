@@ -174,9 +174,11 @@ class HoraController {
 
         if(userToken.id === userID){
             // varmazenando na variavel todos os registros de horas
-            return await Database
+            const horasUser =  await Database
             .from('horas')
             .where('user_id', userToken.id)
+
+            return horasUser;
         }else{
             return response.status(403).json('Forbidden');
         }
