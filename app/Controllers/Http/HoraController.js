@@ -176,7 +176,7 @@ class HoraController {
             // varmazenando na variavel todos os registros de horas
             return await Database
             .table('horas')
-            .where('user_id', userID)
+            .where('user_id', params.user_id)
         }else{
             return response.status(403).json('Forbidden');
         }

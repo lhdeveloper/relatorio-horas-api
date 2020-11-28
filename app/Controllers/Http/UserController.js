@@ -2,18 +2,22 @@
 
 const User = use('App/Models/User');
 const Helpers = use('Helpers');
+const Mail = use('Mail')
 
 class UserController {
-    async register({ request, response, auth }){
+    async register({ request, response }){
         const data = request.only(['username', 'email', 'password'])
         try{
             const user = await User.create(data);
-            const token = await auth.attempt(data.email, data.password);
 
-            user.token = token;
-
-            console.log(user)
-            return user;
+            // await Mail.send('emails.welcome', user.toJSON(), (message) => {
+            //     message
+            //       .to(user.email)
+            //       .from('no-repply@hatto.in')
+            //       .subject('Bem-vindo ao Registro de Horas!')
+            // })
+          
+            //   return 'Cadastro efetuado com sucesso.'
 
         } catch (error){
             return response.status(500).send({error: error})
