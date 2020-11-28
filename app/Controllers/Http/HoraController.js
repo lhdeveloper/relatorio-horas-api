@@ -176,7 +176,7 @@ class HoraController {
             // varmazenando na variavel todos os registros de horas
             const horasUser =  await Database
             .from('horas')
-            .where('user_id', userToken.id)
+            .where('user_id', '=', userToken.id)
 
             return horasUser;
         }else{
