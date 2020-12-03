@@ -47,6 +47,8 @@ class HoraController {
         // salvando o horario inicial
         const inicioDia = moment(results.inicio);
 
+        const today = moment();
+
         // calculando horário de almoço
         const saidaAlmoco = moment(results.saida);
         const voltaAlmoco = moment(results.retorno);
@@ -110,7 +112,7 @@ class HoraController {
 
         }else {
             // se não tem total, preenche com valor zerado;
-            results.total = moment().format(`YYYY-MM-DD 00:00:00`)
+            results.total = moment(today).format(`YYYY-MM-DD 00:00:00`)
         }
 
         
