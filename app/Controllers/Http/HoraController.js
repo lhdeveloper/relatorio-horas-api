@@ -223,6 +223,7 @@ class HoraController {
             return await Database
                 .table('horas')
                 .where('user_id', userToken.id)
+                .orderBy('data', 'asc')
         }else{
             return response.status(403).json('Forbidden');
         }
