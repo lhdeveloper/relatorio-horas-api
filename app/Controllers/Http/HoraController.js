@@ -43,7 +43,7 @@ class HoraController {
      */
     async store({ request, auth }) {
         // pegando os campos
-        const results = request.only(['data', 'inicio', 'saida', 'retorno', 'fim',  'obs', 'user_id']);
+        const results = request.only(['data', 'inicio', 'saida', 'retorno', 'fim',  'obs', 'user_id', 'saida2', 'saida3', 'saida4', 'retorno2', 'retorno3', 'retorno4']);
         
         // salvando o horario inicial
         const inicioDia = moment(results.inicio);
