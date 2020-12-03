@@ -47,26 +47,73 @@ class HoraController {
         // salvando o horario inicial
         const inicioDia = moment(results.inicio);
 
+        // calculando horário de almoço
+        const saidaAlmoco = moment(results.saida);
+        const voltaAlmoco = moment(results.retorno);
+        const durationAlmoco = moment.utc(moment(voltaAlmoco, 'HH:mm:ss').diff(moment(saidaAlmoco, 'HH:mm:ss'))).format('HH:mm:ss');
+
+
+        // // verificando se houveram saidas2
+        // if(results.saida2 != null){
+        //     // pegando os horarios saida2/retorno2
+        //     const segundaSaida2 = moment(results.saida2);
+        //     const retornoSaida2 = moment(results.retorno2);
+
+        //     // calculando o tempo de saida2;
+        //     const durationSaida2 = moment.utc(moment(retornoSaida2, 'HH:mm:ss').diff(moment(segundaSaida2, 'HH:mm:ss'))).format('YYYY-MM-DD HH:mm:ss');
+        //     const horasSaida2 = moment(durationSaida2).format(`H`);
+        //     const minutosSaida2 = moment(durationSaida2).format(`mm`);
+
+        //     var someHoras = moment(durationAlmoco).add(horasSaida2, 'hour');
+        //     var someHoras = moment(durationAlmoco).add(minutosSaida2, 'minutes');
+
+        //     console.log(someHoras);
+        // }
+
+        // // verificando se houveram saidas3
+        // if(results.saida3 != null){
+        //     // pegando os horarios saida3/retorno3
+        //     const segundaSaida3 = moment(results.saida3);
+        //     const retornoSaida3 = moment(results.retorno3);
+
+        //     // calculando o tempo de saida3;
+        //     const durationSaida3 = moment.utc(moment(retornoSaida3, 'HH:mm:ss').diff(moment(segundaSaida3, 'HH:mm:ss'))).format('HH:mm:ss');
+        // }
+
+        // // verificando se houveram saidas4
+        // if(results.saida4 != null){
+        //     // pegando os horarios saida4/retorno4
+        //     const segundaSaida4 = moment(results.saida4);
+        //     const retornoSaida4 = moment(results.retorno4);
+
+        //     // calculando o tempo de saida4;
+        //     const durationSaida4 = moment.utc(moment(retornoSaida4, 'HH:mm:ss').diff(moment(segundaSaida4, 'HH:mm:ss'))).format('HH:mm:ss');
+        // }
+
+        //somando todas as saidas;
+
+        // verificando se o campo data fim está preenchido para calcular o total de horas
         if(results.fim !== null){
             // calculando hora de entrada e hora de saida
             const finalDia = moment(results.fim)
-            const duration = moment.utc(moment(finalDia,"HH:mm:ss").diff(moment(inicioDia,"HH:mm:ss"))).format("HH:mm:ss");
-            
-            // calculando horário de almoço
-            const saidaAlmoco = moment(results.saida);
-            const voltaAlmoco = moment(results.retorno);
-            const durationAlmoco = moment.utc(moment(voltaAlmoco, 'HH:mm:ss').diff(moment(saidaAlmoco, 'HH:mm:ss'))).format('HH:mm:ss');
+            const durationWorkDay = moment.utc(moment(finalDia,"HH:mm:ss").diff(moment(inicioDia,"HH:mm:ss"))).format("HH:mm:ss");
             
             // subtraindo o horário de almoço do horário total
-            const dataHora = moment(moment()).format(`YYYY-MM-DD ${duration}Z`);
-            const dataSubtract = moment(dataHora).subtract(durationAlmoco, 'hour');
-            const totalHoras = moment(dataSubtract).format('HH:mm:ss');
+            const totalHorasDay = moment(moment()).format(`YYYY-MM-DD ${durationWorkDay}Z`);
+            const horasFinais = moment(totalHorasDay).subtract(durationAlmoco, 'hour');
 
-            // setando totalHoras no campo total_horas_dia
+            //total de horas trabalhadas no dia - almoço
+            const totalHoras = moment(horasFinais).format('YYYY-MM-DD HH:mm:ss');
+
+            // setando totalHoras no campo total
             results.total = totalHoras;
+
         }else {
-            results.total = '00:00:00'
+            // se não tem total, preenche com valor zerado;
+            results.total = moment().format(`YYYY-MM-DD 00:00:00`)
         }
+
+        
 
         // criando item no banco
         const hora = await Hora.create(results);
@@ -128,12 +175,12 @@ class HoraController {
                 // subtraindo o horário de almoço do horário total
                 const dataHora = moment(moment()).format(`YYYY-MM-DD ${duration}Z`);
                 const dataSubtract = moment(dataHora).subtract(durationAlmoco, 'hour');
-                const totalHoras = moment(dataSubtract).format('HH:mm:ss');
+                const totalHoras = moment(dataSubtract).format('YYYY-MM-DD HH:mm:ss');
 
                 // setando totalHoras no campo total_horas_dia
                 results.total = totalHoras;
             }else{
-                results.total = '00:00:00';
+                results.total = moment().format(`YYYY-MM-DD 00:00:00`);
             }
 
             // merge das informações atualizadas
