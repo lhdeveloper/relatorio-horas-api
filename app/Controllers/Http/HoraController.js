@@ -109,7 +109,7 @@ class HoraController {
 
         if(userToken.id === userID){
             //buscando campos a serem atualizados
-            const results = request.only(['data', 'inicio', 'fim', 'saida', 'retorno', 'obs', 'total']);
+            const results = request.only(['data', 'inicio', 'fim', 'saida', 'retorno', 'obs', 'total', 'user_id', 'saida2', 'saida3', 'saida4', 'retorno2', 'retorno3', 'retorno4']);
             
             // pegando o item pelo id
             const hora = await Hora.find(params.id)
