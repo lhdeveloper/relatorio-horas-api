@@ -55,42 +55,42 @@ class HoraController {
         const durationAlmoco = moment.utc(moment(voltaAlmoco, 'HH:mm:ss').diff(moment(saidaAlmoco, 'HH:mm:ss'))).format('HH:mm:ss');
 
 
-        // // verificando se houveram saidas2
-        // if(results.saida2 != null){
-        //     // pegando os horarios saida2/retorno2
-        //     const segundaSaida2 = moment(results.saida2);
-        //     const retornoSaida2 = moment(results.retorno2);
+        // verificando se houveram saidas2
+        if(results.saida2 != null){
+            // pegando os horarios saida2/retorno2
+            const segundaSaida2 = moment(results.saida2);
+            const retornoSaida2 = moment(results.retorno2);
 
-        //     // calculando o tempo de saida2;
-        //     const durationSaida2 = moment.utc(moment(retornoSaida2, 'HH:mm:ss').diff(moment(segundaSaida2, 'HH:mm:ss'))).format('YYYY-MM-DD HH:mm:ss');
-        //     const horasSaida2 = moment(durationSaida2).format(`H`);
-        //     const minutosSaida2 = moment(durationSaida2).format(`mm`);
+            // calculando o tempo de saida2;
+            const durationSaida2 = moment.utc(moment(retornoSaida2, 'HH:mm:ss').diff(moment(segundaSaida2, 'HH:mm:ss'))).format('YYYY-MM-DD HH:mm:ss');
+            const horasSaida2 = moment(durationSaida2).format(`H`);
+            const minutosSaida2 = moment(durationSaida2).format(`mm`);
 
-        //     var someHoras = moment(durationAlmoco).add(horasSaida2, 'hour');
-        //     var someHoras = moment(durationAlmoco).add(minutosSaida2, 'minutes');
+            var someHoras = moment(durationAlmoco).add(horasSaida2, 'hour');
+            var someHoras = moment(durationAlmoco).add(minutosSaida2, 'minutes');
 
-        //     console.log(someHoras);
-        // }
+            console.log(someHoras);
+        }
 
-        // // verificando se houveram saidas3
-        // if(results.saida3 != null){
-        //     // pegando os horarios saida3/retorno3
-        //     const segundaSaida3 = moment(results.saida3);
-        //     const retornoSaida3 = moment(results.retorno3);
+        // verificando se houveram saidas3
+        if(results.saida3 != null){
+            // pegando os horarios saida3/retorno3
+            const segundaSaida3 = moment(results.saida3);
+            const retornoSaida3 = moment(results.retorno3);
 
-        //     // calculando o tempo de saida3;
-        //     const durationSaida3 = moment.utc(moment(retornoSaida3, 'HH:mm:ss').diff(moment(segundaSaida3, 'HH:mm:ss'))).format('HH:mm:ss');
-        // }
+            // calculando o tempo de saida3;
+            const durationSaida3 = moment.utc(moment(retornoSaida3, 'HH:mm:ss').diff(moment(segundaSaida3, 'HH:mm:ss'))).format('HH:mm:ss');
+        }
 
-        // // verificando se houveram saidas4
-        // if(results.saida4 != null){
-        //     // pegando os horarios saida4/retorno4
-        //     const segundaSaida4 = moment(results.saida4);
-        //     const retornoSaida4 = moment(results.retorno4);
+        // verificando se houveram saidas4
+        if(results.saida4 != null){
+            // pegando os horarios saida4/retorno4
+            const segundaSaida4 = moment(results.saida4);
+            const retornoSaida4 = moment(results.retorno4);
 
-        //     // calculando o tempo de saida4;
-        //     const durationSaida4 = moment.utc(moment(retornoSaida4, 'HH:mm:ss').diff(moment(segundaSaida4, 'HH:mm:ss'))).format('HH:mm:ss');
-        // }
+            // calculando o tempo de saida4;
+            const durationSaida4 = moment.utc(moment(retornoSaida4, 'HH:mm:ss').diff(moment(segundaSaida4, 'HH:mm:ss'))).format('HH:mm:ss');
+        }
 
         //somando todas as saidas;
 
